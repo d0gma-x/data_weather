@@ -110,7 +110,7 @@ void setup()
   if (!file) {
     Serial.println("File doens't exist");
     Serial.println("Creating file...");
-    writeFile(SD, "/datalog.txt", "Temp, Press, Alt, Hum, Clock \r\n");
+    writeFile(SD, "/datalog.txt", "tempC_dht22, tempF_dht22, temp_bme280, hum_bme280, uv, pm10, pm25 \r\n");
   }
   else {
     Serial.println("File already exists");
@@ -172,16 +172,16 @@ void loop()
   display.setTextColor(WHITE);
   display.setCursor(0, 0);
   display.println(bme280_data);
-  display.setCursor(0, 10);
+  display.setCursor(0, 10); 
   display.println(dht_data);
   display.setCursor(0, 20);
   display.println(uvIntensity);
   display.setCursor(0, 30);
-  display.println(sds011_data);
+  display.println(sds011_data); 
   display.display();
 
-  dataMessage = String(temp) + "," + String(pres) + "," + String(alt) + "," + String(hum) + "," + String(clock_data) + "," + String(lat_str) + "," + String(lng_str) + "\r\n";
+  dataMessage = String(dht_temp_cel) + "," + String(dht_temp_fa) + "," + String(temp) + "," + String(hum) + "," + String(uvIntensity) + "," + String(p10) + "," + String(p25) + "\r\n";
   appendFile(SD, "/datalog.txt", dataMessage.c_str());
 
-  delay(1000);
+  delay(3000);
 }
